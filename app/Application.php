@@ -6,7 +6,12 @@
  * Time: 07:26
  */
 
-namespace akadmin;
+namespace AKCMS;
+require_once 'controllers/admin/Provider.php';
+require_once 'controllers/api/Provider.php';
+require_once 'controllers/home/Provider.php';
+
+
 use DerAlex\Silex\YamlConfigServiceProvider;
 
 class Application extends \Silex\Application
@@ -27,7 +32,9 @@ class Application extends \Silex\Application
     private function registerProviders(){
         $this->register(new YamlConfigServiceProvider($this['root'].'/config/config.yml'));
 
-        $this->mount('/', new \Provider());
+        $this->mount('/api', new \AKCMS\AKAPI\Provider());
+        $this->mount('/admin', new \AKCMS\AKAdmin\Provider());
+        $this->mount('/', new \AKCMS\AKFront\Provider());
 
     }
 

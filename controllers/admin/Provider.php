@@ -6,7 +6,7 @@
  * Date: 17/01/2017
  * Time: 08:08
  */
-
+namespace AKCMS\AKAdmin;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
@@ -27,7 +27,7 @@ class Provider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/', function (Application $app) {
-            return "Hello";
+            return "Hello i am admin";
         });
 
         return $controllers;

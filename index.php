@@ -1,7 +1,12 @@
 <?php
 require_once __DIR__.'/vendor/autoload.php';
 date_default_timezone_set('UTC');
-$app = new Silex\Application();
+require 'app/Application.php';
+use akadmin\Application;
+
+$app = new Application(array(
+    'root' => __DIR__
+));
 
 // ... definitions
 

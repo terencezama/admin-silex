@@ -13,6 +13,7 @@ require_once 'controllers/home/Provider.php';
 
 
 use DerAlex\Silex\YamlConfigServiceProvider;
+use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 
 class Application extends \Silex\Application
@@ -38,6 +39,13 @@ class Application extends \Silex\Application
 
         $this->register(new TwigServiceProvider(), array(
             'twig.path' => $this['root'].'/views',
+        ));
+
+        $this->register(new DoctrineServiceProvider(), array(
+            'db.options' => array(
+                'driver'   => 'pdo_sqlite',
+                'path'     => $this['root'].'/app.db',
+            ),
         ));
 
 

@@ -1,0 +1,4 @@
+db:
+  - password: string
+  - email: string
+

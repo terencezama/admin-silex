@@ -9,5 +9,6 @@
 namespace akadmin;
 class Controller
 {
+    //cool
 
 }

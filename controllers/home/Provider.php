@@ -27,7 +27,7 @@ class Provider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/', function (Application $app) {
-            return "Hello i am front";
+            return $app['twig']->render('front/index.twig');
         });
 
         return $controllers;

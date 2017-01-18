@@ -14,7 +14,14 @@ require_once 'controllers/home/Provider.php';
 
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
+use Silex\Provider\RememberMeServiceProvider;
+use Silex\Provider\SecurityServiceProvider;
+use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\SessionServiceProvider;
+use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\UrlGeneratorServiceProvider;
+use SimpleUser\UserServiceProvider;
 
 class Application extends \Silex\Application
 {
@@ -29,7 +36,7 @@ class Application extends \Silex\Application
         $this->registerProviders();
         $this->mountControllers();
         $this->addTwigExtensions();
-
+        $this->addSimpleUser();
     }
 
 
@@ -47,6 +54,13 @@ class Application extends \Silex\Application
                 'path'     => $this['root'].'/app.db',
             ),
         ));
+
+        $this->register(new SecurityServiceProvider());
+        $this->register(new RememberMeServiceProvider());
+        $this->register(new SessionServiceProvider());
+        $this->register(new ServiceControllerServiceProvider());
+        $this->register(new UrlGeneratorServiceProvider());
+        $this->register(new SwiftmailerServiceProvider());
 
 
 
@@ -73,6 +87,36 @@ class Application extends \Silex\Application
 
             return $twig;
         }));
+    }
+
+    private function addSimpleUser(){
+
+        // Register the SimpleUser service provider.
+        $simpleUserProvider = new UserServiceProvider();
+        $this->register($simpleUserProvider);
+        // Mount the user controller routes:
+        $this->mount('/user', $simpleUserProvider);
+        // Security config. See http://silex.sensiolabs.org/doc/providers/security.html for details.
+        $this['security.firewalls'] = array(
+            /* // Ensure that the login page is accessible to all, if you set anonymous => false below.
+            'login' => array(
+                'pattern' => '^/user/login$',
+            ), */
+            'secured_area' => array(
+                'pattern' => '^.*$',
+                'anonymous' => true,
+                'remember_me' => array(),
+                'form' => array(
+                    'login_path' => '/user/login',
+                    'check_path' => '/user/login_check',
+                ),
+                'logout' => array(
+                    'logout_path' => '/user/logout',
+                ),
+                'users' => $this->share(function($app) { return $app['user.manager']; }),
+            ),
+        );
+
     }
 
 

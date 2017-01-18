@@ -5,6 +5,8 @@
         "symfony/yaml": "^2.8",
         "deralex/yaml-config-service-provider": "^1.0",
         "twig/twig": "^1.31",
-        "symfony/twig-bridge": "^3.2"
+        "symfony/security": "^2.8",
+        "symfony/twig-bridge": "^2.8",
+        "jasongrimes/silex-simpleuser": "^2.0"
     }
 }

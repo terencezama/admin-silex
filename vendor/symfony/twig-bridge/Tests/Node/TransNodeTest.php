@@ -43,7 +43,11 @@ class TransNodeTest extends \PHPUnit_Framework_TestCase
             return sprintf('($context["%s"] ?? null)', $name, $name);
         }
 
-        return sprintf('(isset($context["%s"]) ? $context["%s"] : null)', $name, $name);
+        if (PHP_VERSION_ID >= 50400) {
+            return sprintf('(isset($context["%s"]) ? $context["%s"] : null)', $name, $name);
+        }
+
+        return sprintf('$this->getContext($context, "%s", true)', $name);
     }
 
     protected function getVariableGetterWithStrictCheck($name)
@@ -56,6 +60,10 @@ class TransNodeTest extends \PHPUnit_Framework_TestCase
             return sprintf('($context["%s"] ?? $this->getContext($context, "%s"))', $name, $name, $name);
         }
 
-        return sprintf('(isset($context["%s"]) ? $context["%s"] : $this->getContext($context, "%s"))', $name, $name, $name);
+        if (PHP_VERSION_ID >= 50400) {
+            return sprintf('(isset($context["%s"]) ? $context["%s"] : $this->getContext($context, "%s"))', $name, $name, $name);
+        }
+
+        return sprintf('$this->getContext($context, "%s")', $name);
     }
 }

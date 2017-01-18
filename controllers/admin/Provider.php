@@ -13,6 +13,7 @@ use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
 use AKCMS\AKAdmin\Controller;
+use Symfony\Component\Yaml\Yaml;
 
 class Provider implements ControllerProviderInterface
 {
@@ -28,6 +29,7 @@ class Provider implements ControllerProviderInterface
     {
         // creates a new controller based on the default route
         $controllers = $app['controllers_factory'];
+        $app['sidebar'] = Yaml::parse(file_get_contents($app['root'].'/config/admin/sidebar.yml'));
 
         $controllers->get('/','AKCMS\AKAdmin\Controller::home')->bind('home');
 

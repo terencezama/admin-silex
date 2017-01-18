@@ -17,4 +17,9 @@ class Controller
         return $app['twig']->render('admin/index.twig');
     }
 
+    public function dev(Request $request, Application $app)
+    {
+        return $app['twig']->render('admin/dev.twig');
+    }
+
 }

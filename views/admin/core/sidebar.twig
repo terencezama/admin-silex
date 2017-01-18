@@ -7,19 +7,25 @@
         <ul class="sidebar-menu">
             <li class="header">Menu</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#">Link in level 2</a></li>
-                    <li><a href="#">Link in level 2</a></li>
-                </ul>
-            </li>
+            {% for key, sidebar in app.sidebar %}
+                {% if sidebar.l2 is not defined %}
+                    <li><a href="{{ sidebar.link }}"><i class="fa {{ sidebar.icon }}"></i> <span>{{ sidebar.title }}</span></a></li>
+                {% else %}
+                    <li class="treeview">
+                        <a href="#"><i class="fa {{ sidebar.icon }}"></i> <span>{{ sidebar.title }}</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            {% for key_l2, l2 in sidebar.l2 %}
+                                <li><a href="{{ l2.link }}"><i class="fa {{ l2.icon }}"></i> <span>{{ l2.title }}</span></a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+
+            {% endfor %}
+
+
         </ul>
         <!-- /.sidebar-menu -->
     </section>

@@ -1,1 +1,17 @@
 {% extends 'admin/core/base.twig' %}
+{% import 'admin/core/ui.twig' as ui %}
+{% block content %}
+
+    {% embed 'admin/core/3col.twig' %}
+        {% block col_1 %}
+            {% embed 'admin/core/stack.twig' with {'title':'Database'} %}
+                {% block body %}
+                    {{ ui.stack_link(db.dev_table('User')) }}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+
+
+
+{% endblock %}

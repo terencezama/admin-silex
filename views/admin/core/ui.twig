@@ -1,0 +1,13 @@
+{% macro btn_block(title,link) %}
+    <a href="{{ link }}" class="btn btn-block btn-primary">{{ title|raw }}</a>
+{% endmacro btn_block %}
+
+{% macro stack_link(args) %}
+    <li>
+        <a href="{{ args.link }}">{{ args.title }}
+            {% if args.badge_title is defined %}
+                <span class="pull-right badge {{ args.badge_color }}">{{ args.badge_title }}</span>
+            {% endif %}
+        </a>
+    </li>
+{% endmacro %}

@@ -58,7 +58,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{ app.section }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini">{{ app.config.title }}</span>
             <!-- logo for regular state and mobile devices -->
@@ -81,8 +81,8 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
-                <small>Optional description</small>
+                {{ page.title }}
+                <small>{{ page.description }}</small>
             </h1>
         </section>
 

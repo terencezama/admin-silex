@@ -12,6 +12,7 @@ require_once 'controllers/api/Provider.php';
 require_once 'controllers/home/Provider.php';
 
 
+use AKCMS\AKAdmin\DB;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\RememberMeServiceProvider;
@@ -34,6 +35,7 @@ class Application extends \Silex\Application
 
 
         $this->registerProviders();
+        $this->registerServices();
         $this->mountControllers();
         $this->addTwigExtensions();
         $this->addSimpleUser();
@@ -63,6 +65,10 @@ class Application extends \Silex\Application
         $this->register(new SwiftmailerServiceProvider());
 
 
+
+    }
+
+    public function registerServices(){
 
     }
 

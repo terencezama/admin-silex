@@ -30,8 +30,10 @@ class Provider implements ControllerProviderInterface
         // creates a new controller based on the default route
         $controllers = $app['controllers_factory'];
         $app['sidebar'] = Yaml::parse(file_get_contents($app['root'].'/config/admin/sidebar.yml'));
+        $app['section'] = '/admin';
 
         $controllers->get('/','AKCMS\AKAdmin\Controller::home')->bind('home');
+        $controllers->get('/dev','AKCMS\AKAdmin\Controller::dev')->bind('dev');
 
         return $controllers;
     }

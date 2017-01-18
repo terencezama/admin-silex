@@ -64,9 +64,9 @@ class Application extends \Silex\Application
             $twig->addFunction(new \Twig_SimpleFunction('asset', function ($asset,$path = null) use($app) {
                 //return $app['root'].'/'. (isset($path))?$path.'/':''.$asset;
                 if(isset($path)){
-                    return $app['root'].'/assets/'.$path.'/'.$asset;
+                    return '/assets/'.$path.'/'.$asset;
                 }else{
-                    return $app['root'].'/assets/'.$asset;
+                    return '/assets/'.$asset;
                 }
 
             }));

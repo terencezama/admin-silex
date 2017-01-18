@@ -7,9 +7,12 @@
  * Time: 08:08
  */
 namespace AKCMS\AKAdmin;
+
+require 'Controller.php';
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
+use AKCMS\AKAdmin\Controller;
 
 class Provider implements ControllerProviderInterface
 {
@@ -26,9 +29,7 @@ class Provider implements ControllerProviderInterface
         // creates a new controller based on the default route
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('/', function (Application $app) {
-            return "Hello i am admin";
-        });
+        $controllers->get('/','AKCMS\AKAdmin\Controller::home')->bind('home');
 
         return $controllers;
     }

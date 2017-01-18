@@ -6,9 +6,15 @@
  * Date: 17/01/2017
  * Time: 08:08
  */
-namespace akadmin;
+namespace AKCMS\AKAdmin;
+use AKCMS\Application;
+use Symfony\Component\HttpFoundation\Request;
+
 class Controller
 {
-    //cool
+    public function home(Request $request, Application $app)
+    {
+        return $app['twig']->render('admin/index.twig');
+    }
 
 }

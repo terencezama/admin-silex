@@ -26,10 +26,9 @@ class Controller
         $this->context["db"] = new DB($app);
 
         if(isset($_GET['action'])){
-            return $this->context["db"]->$_GET['action']();
-        }else{
-            return $app['twig']->render('admin/dev.twig',$this->context);
+            $this->context["db"]->$_GET['action']();
         }
+        return $app['twig']->render('admin/dev.twig',$this->context);
     }
 
     //region Utils

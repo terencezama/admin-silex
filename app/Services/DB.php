@@ -51,9 +51,24 @@ class DB
     }
 
     function create_users_table(){
-        $table =
-        $table = $this->schema->createTable('users');
-        return json_encode($table);
+        $table = new Table('users');
+
+        $table->addColumn('id','integer')->setUnsigned(true)->setAutoincrement(true);
+        $table->addColumn('email','string')->setNotnull(true)->setDefault('');
+        $table->addColumn('password','string')->setNotnull(true)->setDefault('');
+        $table->addColumn('salt','string')->setNotnull(true)->setDefault('');
+        $table->addColumn('roles','string')->setNotnull(true)->setDefault('');
+        $table->addColumn('name','string')->setNotnull(true)->setDefault('');
+        $table->addColumn('time_created','integer')->setNotnull(true)->setDefault(0);
+        $table->addColumn('username','string')->setNotnull(true)->setDefault('');
+        $table->addColumn('isEnabled','boolean')->setNotnull(true)->setDefault(true);
+        $table->addColumn('confirmationToken','string');
+        $table->addColumn('timePasswordRestRequested','integer')->setUnsigned(true);
+
+        $table->setPrimaryKey(array('id'));
+        $table->addUniqueIndex(array('email','username'));
+
+        $this->schema->createTable($table);
     }
 
 

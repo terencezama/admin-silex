@@ -11,7 +11,7 @@ namespace AKCMS\AKAdmin;
 
 class DevController
 {
-    function create_user_table(){
+    function create_table($table_name){
 
     }
 }

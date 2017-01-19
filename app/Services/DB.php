@@ -78,6 +78,12 @@ class DB
                 'password' => $encoder->encodePassword('1234',''),
                 'roles' => 'ROLE_ADMIN'
             ));
+
+            $app['db']->insert('users', array(
+                'username' => 'driver',
+                'password' => $encoder->encodePassword('1234',''),
+                'roles' => 'ROLE_DRIVER'
+            ));
         }
     }
 

@@ -1,0 +1,33 @@
+<div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <img src="{{ asset('img/admin.png','admin') }}" class="user-image" alt="User Image">
+                <span class="hidden-xs">{{ app.security.token.user|capitalize }}</span>
+            </a>
+            <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+                    <img src="{{ asset('img/admin.png','admin') }}" class="img-circle" alt="User Image">
+
+                    <p>
+                        {{ app.security.token.user|capitalize }}
+                        <small>{{  app.security.token.user.roles[0] }}</small>
+                    </p>
+                </li>
+
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <div class="pull-right">
+                        <a href="{{ path('admin_logout') }}" class="btn btn-default btn-flat">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <!-- Control Sidebar Toggle Button -->
+        <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+        </li>
+    </ul>
+</div>

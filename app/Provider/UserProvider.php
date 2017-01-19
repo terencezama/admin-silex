@@ -19,14 +19,19 @@ use Doctrine\DBAL\Connection;
 class UserProvider implements UserProviderInterface
 {
     private $conn;
+    private $db_utils;
 
-    public function __construct(Connection $conn)
+    public function __construct(Connection $conn, DB $db_utils)
     {
         $this->conn = $conn;
+        $this->db_utils = $db_utils;
     }
 
     public function loadUserByUsername($username)
     {
+        if(!$this->conn->getSchemaManager()->tablesExist('users')){
+            $this->db_utils->create_users_table();
+        }
         $stmt = $this->conn->executeQuery('SELECT * FROM users WHERE username = ?', array(strtolower($username)));
 
         if (!$user = $stmt->fetch()) {

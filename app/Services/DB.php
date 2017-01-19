@@ -12,6 +12,7 @@ namespace AKCMS\AKAdmin;
 use AKCMS\Application;
 use Doctrine\DBAL\Schema\Table;
 use Exception;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 
 class DB
@@ -29,13 +30,13 @@ class DB
 
         $stack = array();
         if(!$this->schema->tablesExist($table_name)){
-            $stack['title'] = "Create $table_name";
+            $stack['title'] = "create <strong>$table_name</strong>";
             $stack['link'] = "/admin/dev?action=create_".strtolower($table_name)."_table";
             $stack['badge_title'] = 'not_created';
             $stack['badge_color'] = 'bg-red';
         }else{
-            $stack['title'] = "Delete $table_name";
-            $stack['link'] = "/admin/dev?action=delete_".strtolower($table_name)."_table";
+            $stack['title'] = "delete <strong>$table_name</strong>";
+            $stack['link'] = "/admin/dev?action=delete_table&table=".strtolower($table_name);
             $stack['badge_title'] = 'created';
             $stack['badge_color'] = 'bg-green';
         }
@@ -51,24 +52,33 @@ class DB
     }
 
     function create_users_table(){
-        $table = new Table('users');
+        $app = $this->app;
+        if (!$this->schema->tablesExist('users')) {
+            $users = new Table('users');
 
-        $table->addColumn('id','integer')->setUnsigned(true)->setAutoincrement(true);
-        $table->addColumn('email','string')->setNotnull(true)->setDefault('');
-        $table->addColumn('password','string')->setNotnull(true)->setDefault('');
-        $table->addColumn('salt','string')->setNotnull(true)->setDefault('');
-        $table->addColumn('roles','string')->setNotnull(true)->setDefault('');
-        $table->addColumn('name','string')->setNotnull(true)->setDefault('');
-        $table->addColumn('time_created','integer')->setNotnull(true)->setDefault(0);
-        $table->addColumn('username','string')->setNotnull(true)->setDefault('');
-        $table->addColumn('isEnabled','boolean')->setNotnull(true)->setDefault(true);
-        $table->addColumn('confirmationToken','string');
-        $table->addColumn('timePasswordRestRequested','integer')->setUnsigned(true);
+            $users->addColumn('id', 'integer', array('unsigned' => true, 'autoincrement' => true));
+            $users->addColumn('username', 'string', array('length' => 32));
+            $users->addColumn('password', 'string', array('length' => 255));
+            $users->addColumn('roles', 'string', array('length' => 255));
 
-        $table->setPrimaryKey(array('id'));
-        $table->addUniqueIndex(array('email','username'));
+            $users->setPrimaryKey(array('id'));
+            $users->addUniqueIndex(array('username'));
 
-        $this->schema->createTable($table);
+            $this->schema->createTable($users);
+
+            $encoder = new MessageDigestPasswordEncoder();
+            $app['db']->insert('users', array(
+                'username' => 'user',
+                'password' => $encoder->encodePassword('1234',''),
+                'roles' => 'ROLE_USER'
+            ));
+
+            $app['db']->insert('users', array(
+                'username' => 'admin',
+                'password' => $encoder->encodePassword('1234',''),
+                'roles' => 'ROLE_ADMIN'
+            ));
+        }
     }
 
 

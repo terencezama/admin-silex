@@ -4,10 +4,9 @@
 
     {% embed 'admin/core/3col.twig' %}
         {% block col_1 %}
-            {% embed 'admin/core/stack.twig' with {'title':'Database'} %}
+            {% embed 'admin/core/stack.twig' with {'title':"Database <small>Tables</small>"} %}
                 {% block body %}
                     {{ ui.stack_link(db.dev_table('users')) }}
-                    {{ ui.stack_link(db.dev_table('user_custom_fields')) }}
                 {% endblock %}
             {% endembed %}
         {% endblock %}

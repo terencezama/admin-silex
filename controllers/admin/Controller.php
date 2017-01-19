@@ -26,7 +26,13 @@ class Controller
         $this->context["db"] = new DB($app);
 
         if(isset($_GET['action'])){
-            $this->context["db"]->$_GET['action']();
+            $action = $_GET['action'];
+            if($action === 'delete_table'){
+                $this->context["db"]->$_GET['action']($_GET['table']);
+            }else{
+                $this->context["db"]->$_GET['action']();
+            }
+
         }
         return $app['twig']->render('admin/dev.twig',$this->context);
     }

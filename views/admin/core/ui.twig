@@ -4,7 +4,7 @@
 
 {% macro stack_link(args) %}
     <li>
-        <a href="{{ args.link }}">{{ args.title }}
+        <a href="{{ args.link }}">{{ args.title|raw }}
             {% if args.badge_title is defined %}
                 <span class="pull-right badge {{ args.badge_color }}">{{ args.badge_title }}</span>
             {% endif %}

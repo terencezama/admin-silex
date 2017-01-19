@@ -10,9 +10,10 @@ namespace AKCMS;
 require_once 'controllers/admin/Provider.php';
 require_once 'controllers/api/Provider.php';
 require_once 'controllers/home/Provider.php';
-
+require_once 'app/Provider/UserProvider.php';
 
 use AKCMS\AKAdmin\DB;
+use AKCMS\AKAdmin\UserProvider;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\RememberMeServiceProvider;
@@ -22,7 +23,7 @@ use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
-use SimpleUser\UserServiceProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 class Application extends \Silex\Application
 {
@@ -38,7 +39,8 @@ class Application extends \Silex\Application
         $this->registerServices();
         $this->mountControllers();
         $this->addTwigExtensions();
-        $this->addSimpleUser();
+        $this->setSecurityOptions();
+
     }
 
 
@@ -95,35 +97,28 @@ class Application extends \Silex\Application
         }));
     }
 
-    private function addSimpleUser(){
+    private function setSecurityOptions(){
+        $app = $this;
 
-        // Register the SimpleUser service provider.
-        $simpleUserProvider = new UserServiceProvider();
-        $this->register($simpleUserProvider);
-        // Mount the user controller routes:
-        $this->mount('/user', $simpleUserProvider);
-        // Security config. See http://silex.sensiolabs.org/doc/providers/security.html for details.
-        $this['security.firewalls'] = array(
-            /* // Ensure that the login page is accessible to all, if you set anonymous => false below.
-            'login' => array(
-                'pattern' => '^/user/login$',
-            ), */
-            'secured_area' => array(
-                'pattern' => '^.*$',
-                'anonymous' => true,
-                'remember_me' => array(),
-                'form' => array(
-                    'login_path' => '/user/login',
-                    'check_path' => '/user/login_check',
-                ),
-                'logout' => array(
-                    'logout_path' => '/user/logout',
-                ),
-                'users' => $this->share(function($app) { return $app['user.manager']; }),
+        $app['security.firewalls'] = array(
+            'admin' => array(
+                'pattern' => '^/admin/',
+                'form' => array('login_path' => '/login', 'check_path' => '/admin/login_check'),
+                'logout' => array('logout_path' => '/admin/logout', 'invalidate_session' => true),
+                'users' => $app->share(function () use ($app) {
+                    return new UserProvider($app['db']);
+                }),
             ),
         );
 
+        $app->get('/login', function(Request $request) use ($app) {
+            return $app['twig']->render('admin/login.twig', array(
+                'error'         => $app['security.last_error']($request),
+                'last_username' => $app['session']->get('_security.last_username'),
+            ));
+        });
     }
+
 
 
 

@@ -17,6 +17,7 @@ use AKCMS\AKAdmin\UserProvider;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\RememberMeServiceProvider;
+use Silex\Provider\SecurityJWTServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SessionServiceProvider;
@@ -31,9 +32,13 @@ class Application extends \Silex\Application
     function __construct(array $values)
     {
         parent::__construct($values);
+        $app = $this;
 
         $this['debug'] = true;
 
+        $this['users'] = $app->share(function () use ($app) {
+            return new UserProvider($app['db'],new DB($app));
+        });
 
         $this->registerProviders();
         $this->registerServices();
@@ -60,6 +65,8 @@ class Application extends \Silex\Application
         ));
 
         $this->register(new SecurityServiceProvider());
+        $this->setJwtConfigs();
+        $this->register(new SecurityJWTServiceProvider());
         $this->register(new RememberMeServiceProvider());
         $this->register(new SessionServiceProvider());
         $this->register(new ServiceControllerServiceProvider());
@@ -97,17 +104,40 @@ class Application extends \Silex\Application
         }));
     }
 
+    private function setJwtConfigs(){
+        $this['security.jwt'] = [
+            'secret_key' => 'HjC*]11P~Zud$u6Y{F46^5BeojGEO@lakt8P/i%C{C>H3Q58/O8q3}K3eWpr[N>',
+            'life_time'  => 86400,
+            'options'    => [
+                'username_claim' => 'sub', // default name, option specifying claim containing username
+                'header_name' => 'X-Access-Token', // default null, option for usage normal oauth2 header
+                'token_prefix' => 'Bearer',
+            ]
+        ];
+    }
+
     private function setSecurityOptions(){
         $app = $this;
-
         $app['security.firewalls'] = array(
+            'login' => [
+                'pattern' => 'register|api/login|forget|reset',
+                'anonymous' => true
+            ],
             'admin' => array(
                 'pattern' => '^/admin/',
                 'form' => array('login_path' => '/login', 'check_path' => '/admin/login_check'),
                 'logout' => array('logout_path' => '/admin/logout', 'invalidate_session' => true),
-                'users' => $app->share(function () use ($app) {
-                    return new UserProvider($app['db'],new DB($app));
-                }),
+                'users' => $app['users'],
+            ),
+            'api' => array(
+                'pattern' => '^/api',
+                'logout' => array('logout_path' => 'api/logout'),
+                'users' => $app['users'],
+                'jwt' => array(
+                    'use_forward' => true,
+                    'require_previous_session' => false,
+                    'stateless' => true,
+                )
             ),
         );
 
@@ -117,6 +147,8 @@ class Application extends \Silex\Application
                 'last_username' => $app['session']->get('_security.last_username'),
             ));
         });
+
+
     }
 
 

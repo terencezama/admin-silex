@@ -6,6 +6,7 @@
         "deralex/yaml-config-service-provider": "^1.0",
         "twig/twig": "^1.31",
         "symfony/security": "^2.8",
-        "symfony/twig-bridge": "^2.8"
+        "symfony/twig-bridge": "^2.8",
+        "cnam/security-jwt-service-provider": "1.*"
     }
 }

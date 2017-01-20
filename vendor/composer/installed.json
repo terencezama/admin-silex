@@ -1900,5 +1900,98 @@
         ],
         "description": "Symfony Twig Bridge",
         "homepage": "https://symfony.com"
+    },
+    {
+        "name": "firebase/php-jwt",
+        "version": "2.0.0",
+        "version_normalized": "2.0.0.0",
+        "target-dir": "Firebase/PHP-JWT",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/firebase/php-jwt.git",
+            "reference": "ffcfd888ce1e4f2d70cac2dc9b7301038332fe57"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/firebase/php-jwt/zipball/ffcfd888ce1e4f2d70cac2dc9b7301038332fe57",
+            "reference": "ffcfd888ce1e4f2d70cac2dc9b7301038332fe57",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "time": "2015-04-01T18:46:38+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "Authentication/",
+                "Exceptions/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Neuman Vong",
+                "email": "neuman+pear@twilio.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anant Narayanan",
+                "email": "anant@php.net",
+                "role": "Developer"
+            }
+        ],
+        "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+        "homepage": "https://github.com/firebase/php-jwt"
+    },
+    {
+        "name": "cnam/security-jwt-service-provider",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cnam/security-jwt-service-provider.git",
+            "reference": "c99da9d8cd51abe218b38d4d87288f75c52692a5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/cnam/security-jwt-service-provider/zipball/c99da9d8cd51abe218b38d4d87288f75c52692a5",
+            "reference": "c99da9d8cd51abe218b38d4d87288f75c52692a5",
+            "shasum": ""
+        },
+        "require": {
+            "firebase/php-jwt": "2.0.0",
+            "pimple/pimple": "~1.0",
+            "symfony/security": "~2.3,<3.0"
+        },
+        "require-dev": {
+            "silex/silex": "1.3"
+        },
+        "time": "2015-12-02T22:52:11+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Silex\\Provider\\": "src/Silex/Provider/",
+                "Silex\\Component\\Security\\Http\\": "src/Silex/Component/Security/Http/",
+                "Silex\\Component\\Security\\Core\\": "src/Silex/Component/Security/Core/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Anton Popov",
+                "email": "cnam812@gmail.com"
+            },
+            {
+                "name": "V",
+                "email": "v.tyubek@gmail.com"
+            }
+        ],
+        "description": "Service Provider for usage jwt token for auth"
     }
 ]

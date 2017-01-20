@@ -35,6 +35,9 @@ class ComposerStaticInitb0d48194c360034578513ee8f131fefb
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Bridge\\Twig\\' => 20,
+            'Silex\\Provider\\' => 15,
+            'Silex\\Component\\Security\\Http\\' => 30,
+            'Silex\\Component\\Security\\Core\\' => 30,
             'Silex\\' => 6,
         ),
         'P' => 
@@ -112,6 +115,18 @@ class ComposerStaticInitb0d48194c360034578513ee8f131fefb
         array (
             0 => __DIR__ . '/..' . '/symfony/twig-bridge',
         ),
+        'Silex\\Provider\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cnam/security-jwt-service-provider/src/Silex/Provider',
+        ),
+        'Silex\\Component\\Security\\Http\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cnam/security-jwt-service-provider/src/Silex/Component/Security/Http',
+        ),
+        'Silex\\Component\\Security\\Core\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cnam/security-jwt-service-provider/src/Silex/Component/Security/Core',
+        ),
         'Silex\\' => 
         array (
             0 => __DIR__ . '/..' . '/silex/silex/src/Silex',
@@ -177,12 +192,16 @@ class ComposerStaticInitb0d48194c360034578513ee8f131fefb
     public static $classMap = array (
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+        'BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/Firebase/PHP-JWT/Exceptions/BeforeValidException.php',
         'CallbackFilterIterator' => __DIR__ . '/..' . '/symfony/polyfill-php54/Resources/stubs/CallbackFilterIterator.php',
         'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
         'Error' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/Error.php',
+        'ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/Firebase/PHP-JWT/Exceptions/ExpiredException.php',
+        'JWT' => __DIR__ . '/..' . '/firebase/php-jwt/Firebase/PHP-JWT/Authentication/JWT.php',
         'ParseError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ParseError.php',
         'RecursiveCallbackFilterIterator' => __DIR__ . '/..' . '/symfony/polyfill-php54/Resources/stubs/RecursiveCallbackFilterIterator.php',
         'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill-php54/Resources/stubs/SessionHandlerInterface.php',
+        'SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/Firebase/PHP-JWT/Exceptions/SignatureInvalidException.php',
         'TypeError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
     );
 

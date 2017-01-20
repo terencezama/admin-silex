@@ -6,10 +6,13 @@
  * Date: 17/01/2017
  * Time: 08:08
  */
-namespace AKCMS\AKAPI;
+namespace AKCMS\AKApi;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
+require 'Controller.php';
+
+use AKCMS\AKApi\Controller;
 
 class Provider implements ControllerProviderInterface
 {
@@ -23,12 +26,11 @@ class Provider implements ControllerProviderInterface
      */
     public function connect(Application $app)
     {
-        // creates a new controller based on the default route
         $controllers = $app['controllers_factory'];
+        $app['section'] = '/api';
 
-        $controllers->get('/', function (Application $app) {
-            return "Hello i am api";
-        });
+        $controllers->post('/login','AKCMS\AKApi\Controller::login')->bind('api.login');
+        $controllers->get('/test','AKCMS\AKApi\Controller::test')->bind('api.test');
 
         return $controllers;
     }

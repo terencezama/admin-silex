@@ -84,6 +84,12 @@ class DB
                 'password' => $encoder->encodePassword('1234',''),
                 'roles' => 'ROLE_DRIVER'
             ));
+
+            $app['db']->insert('users', array(
+                'username' => 'app',
+                'password' => $encoder->encodePassword('1234',''),
+                'roles' => 'ROLE_APP'
+            ));
         }
     }
 
